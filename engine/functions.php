@@ -45,3 +45,41 @@ function canUpload($file)
 
     return true;
 }
+
+function uploadImages()
+{
+    $message = '';
+
+    if (isset($_FILES['file'])) {
+        $file = $_FILES['file'];
+
+        // проверяем, можно ли загружать изображение
+        $check = canUpload($file);
+
+        if ($check === true) {
+            $filename = $file['name'];
+
+
+            // загружаем изображение на сервер
+            move_uploaded_file($file['tmp_name'], 'img/' . $filename);
+
+            $caption = isset($_POST['caption']) ? $_POST['caption'] : '';
+
+            if (empty($caption)) {
+                $caption = basename($filename);
+            }
+
+            $size = getimagesize('img/' . $filename);
+
+            addProductImage($filename, $caption, $size[0] . '*' . $size[1]);
+
+            header("Location: /gallery.php");
+            exit();
+        } else {
+            // выводим сообщение об ошибке
+            $message = "<strong>$check</strong>";
+        }
+    }
+
+    return $message;
+}

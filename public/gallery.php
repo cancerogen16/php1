@@ -2,27 +2,15 @@
 require_once(realpath('../config/config.php'));
 
 require_once(ENGINE_DIR . '/functions.php');
+require_once(ENGINE_DIR . '/db_model.php');
 
 $message = '';
 
-if (isset($_FILES['file'])) {
-    $file = $_FILES['file'];
-
-    // проверяем, можно ли загружать изображение
-    $check = canUpload($file);
-
-    if ($check === true) {
-        // загружаем изображение на сервер
-        move_uploaded_file($file['tmp_name'], 'img/' . $file['name']);
-        header("Location: /gallery.php");
-        exit();
-    } else {
-        // выводим сообщение об ошибке
-        $message = "<strong>$check</strong>";
-    }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $message = uploadImages();
 }
 
-$images = getFilesList(IMAGES_DIR);
+$images = getProductImages();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -42,13 +30,14 @@ $images = getFilesList(IMAGES_DIR);
     <div class="content">
         <div class="container">
             <h1>Галерея</h1>
-            <p>Вывод изображений из папки</p>
+            <p>Вывод изображений из базы данных</p>
 
             <div class="images">
                 <?php if (!empty($images)) : ?>
                 <?php foreach ($images as $image) : ?>
-                <a class="image__link" href="img/<?= $image ?>" target="_blank" rel="modalimg">
-                    <img class="image" src="img/<?= $image ?>" alt="<?= $image ?>" width="250">
+                <a class="image__link" href="productImage.php?image_id=<?= $image['id'] ?>"
+                    title="<?= $image['caption'] ?>">
+                    <img class="image" src="img/<?= $image['image'] ?>" alt="<?= $image['caption'] ?>" width="250">
                 </a>
                 <?php endforeach; ?>
                 <?php endif; ?>

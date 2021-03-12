@@ -128,8 +128,24 @@ body {
     cursor: pointer;
 }
 
+.image-section {
+    display: flex;
+    align-items: flex-start;
+}
 
-/* 100% Image Width on Smaller Screens */
+.image-wrap {
+    max-width: 70%;
+}
+
+.full-image {
+    max-width: 100%;
+}
+
+.image-description {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
 
 @media only screen and (max-width: 700px) {
     .modal-content {
