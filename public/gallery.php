@@ -7,7 +7,7 @@ require_once(ENGINE_DIR . '/db_model.php');
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $message = uploadImages();
+    $message = uploadImage();
 }
 
 $images = getProductImages();

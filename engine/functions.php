@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Получение массива файлов из директории
+ *
+ * @param  string $directory
+ * @return array $files
+ */
 function getFilesList($directory)
 {
     $files = [];
@@ -20,6 +27,12 @@ function getFilesList($directory)
     return $files;
 }
 
+/**
+ * Проверка возможности загрузки изображения
+ *
+ * @param  string $file
+ * @return mixed
+ */
 function canUpload($file)
 {
     // если имя пустое, значит файл не выбран
@@ -46,7 +59,13 @@ function canUpload($file)
     return true;
 }
 
-function uploadImages()
+
+/**
+ * Загрузка изображения
+ *
+ * @return string
+ */
+function uploadImage()
 {
     $message = '';
 

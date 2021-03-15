@@ -43,7 +43,7 @@ if ($image_id) {
                 <div class="image-description">
                     <div class="description-item">Название изображения: <?= $image['caption'] ?></div>
                     <div class="description-item">Размер изображения: <?= $image['size'] ?></div>
-                    <div class="description-item">Число просмотров: <?= $image['viewed'] ?></div>
+                    <div class="description-item">Число просмотров: <?= $image['views'] ?></div>
                 </div>
             </div>
         </div>
