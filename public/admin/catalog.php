@@ -6,8 +6,14 @@ require_once(ENGINE_DIR . '/db_model.php');
 
 $message = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $message = uploadImage();
+$product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
+$delete_product = filter_input(INPUT_GET, 'delete_product', FILTER_SANITIZE_SPECIAL_CHARS);
+
+if ($delete_product && $product_id) {
+    deleteProduct($product_id);
+
+    header("Location: /admin/catalog.php");
+    exit();
 }
 
 $products = getProducts();
@@ -62,9 +68,10 @@ $products = getProducts();
                             </td>
                             <td><?= $product['price'] ?></td>
                             <td><?= $product['quantity'] ?></td>
-                            <td><a href="product.php?product_id=<?= $product['product_id'] ?>"
+                            <td><a class="button" href="product.php?product_id=<?= $product['product_id'] ?>"
                                     title="Редактировать">Редактировать</a></td>
-                            <td><a href="product.php?product_id=<?= $product['product_id'] ?>"
+                            <td><a class="button"
+                                    href="catalog.php?delete_product=1&product_id=<?= $product['product_id'] ?>"
                                     title="Удалить">Удалить</a></td>
                         </tr>
                         <?php endforeach; ?>
@@ -77,7 +84,7 @@ $products = getProducts();
                 </table>
 
                 <div class="add-product">
-                    <a href="product.php?add_product=1" title="Добавить товар">Добавить
+                    <a class="button" href="product.php?add_product=1" title="Добавить товар">Добавить
                         товар</a>
                 </div>
             </div>
