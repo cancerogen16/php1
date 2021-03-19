@@ -4,13 +4,7 @@ require __DIR__ . '/../config/config.php';
 require_once(ENGINE_DIR . '/functions.php');
 require_once(ENGINE_DIR . '/db_model.php');
 
-$message = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $message = uploadImage();
-}
-
-$images = getProductImages();
+$products = getProducts();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -19,7 +13,7 @@ $images = getProductImages();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Галерея</title>
+    <title>Каталог товаров</title>
     <link rel="stylesheet" href="/css/app.css">
 </head>
 
@@ -29,16 +23,27 @@ $images = getProductImages();
 
     <div class="content">
         <div class="container">
-            <h1>Галерея</h1>
-            <p>Вывод изображений из базы данных</p>
+            <h1>Каталог товаров</h1>
+            <p>Вывод списка товаров</p>
 
-            <div class="images">
-                <?php if (!empty($images)) : ?>
-                <?php foreach ($images as $image) : ?>
-                <a class="image__link" href="productImage.php?image_id=<?= $image['id'] ?>"
-                    title="<?= $image['caption'] ?>">
-                    <img class="image" src="img/<?= $image['image'] ?>" alt="<?= $image['caption'] ?>" width="250">
-                </a>
+            <div class="products">
+                <?php if (!empty($products)) : ?>
+                <?php foreach ($products as $product) : ?>
+                <div class="product">
+                    <div class="product__image">
+                        <a class="image__link" href="product.php?product_id=<?= $product['product_id'] ?>"
+                            title="<?= $product['name'] ?>">
+                            <img class="image" src="/img/<?= $product['image'] ?>" alt="<?= $product['name'] ?>"
+                                width="250">
+                        </a>
+                    </div>
+                    <div class="product__info">
+                        <h3><a class="product__link" href="product.php?product_id=<?= $product['product_id'] ?>"
+                                title="<?= $product['name'] ?>"><?= $product['name'] ?></a></h3>
+                        <div class="price"><?= $product['price'] ?></div>
+                    </div>
+                </div>
+
                 <?php endforeach; ?>
                 <?php endif; ?>
             </div>
