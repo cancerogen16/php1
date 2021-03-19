@@ -24,7 +24,7 @@ function getProduct($product_id)
 {
     require_once(__DIR__ . '/../config/db.php');
 
-    $query = "SELECT * FROM product WHERE product_id = $product_id";
+    $query = "SELECT * FROM product WHERE product_id = '" . (int)$product_id . "'";
 
     $row = get_db_result($query);
 
@@ -46,15 +46,17 @@ function addProduct($data)
     return true;
 }
 
-function editProduct($product_id)
+function editProduct($product_id, $data)
 {
     require_once(__DIR__ . '/../config/db.php');
 
-    $query = "INSERT INTO product (image, caption, size) VALUES ('$image', '$caption', '$size')";
+    $name = (empty($data['name'])) ? '' : $data['name'];
+    $quantity = (empty($data['quantity'])) ? 0 : $data['quantity'];
+    $price = (empty($data['price'])) ? 0 : $data['price'];
 
-    mysqli_query($db, $query);
+    $query = "UPDATE product SET name = '" . $name . "', quantity = '" . $quantity . "', price = '" . $price . "'  WHERE product_id = '" . (int)$product_id . "'";
 
-    mysqli_close($db);
+    update_db($query);
 
     return true;
 }
