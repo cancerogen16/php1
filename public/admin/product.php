@@ -2,8 +2,8 @@
 require __DIR__ . '/../../config/config.php';
 
 require_once(ENGINE_DIR . '/functions.php');
-require_once(ENGINE_DIR . '/upload.php');
 require_once(ENGINE_DIR . '/db_model.php');
+require_once(ENGINE_DIR . '/uploadImage.php');
 
 $message = '';
 
@@ -30,24 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: /admin/product.php?product_id=" . $product_id);
         exit();
     } elseif (isset($_POST['load_image'])) {
-        if (isset($_FILES['file'])) {
-            $file = $_FILES['file'];
-
-            // проверяем, можно ли загружать изображение
-            $check = canUpload($file);
-
-            if ($check === true) {
-                $filename = $file['name'];
-
-                // загружаем изображение на сервер
-                if (move_uploaded_file($file['tmp_name'], IMAGES_DIR . $filename)) {
-                    $_POST['image'] = $filename;
-                }
-            } else {
-                // выводим сообщение об ошибке
-                $message = "<b>$check</b>";
-            }
-        }
+        $message = uploadImage();
     }
 } else {
     if ($product_id) {
