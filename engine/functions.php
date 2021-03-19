@@ -1,14 +1,24 @@
 <?php
 
 /**
- * Получение из базы данных товаров
+ * Получение из базы данных товаров, отсортированных по $sort и $order
  *
+ * @param  string $sort параметр сортировки
+ * @param  string $order направление сортировки
  * @return array db_result
  */
-function getProducts() {
+function getProducts($sort = '', $order = '') {
     require_once(__DIR__ . '/../config/db.php');
 
     $query = "SELECT * FROM product WHERE 1";
+
+    if ($sort) {
+        $query .= " ORDER BY $sort";
+
+        if ($order) {
+            $query .= " $order";
+        }
+    }
 
     return get_db_result($query);
 }
