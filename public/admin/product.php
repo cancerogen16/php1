@@ -20,14 +20,19 @@ if ($add_product) {
 $product_info = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['save'])) {
+    if (isset($_POST['save']) || isset($_POST['applay'])) {
         if ($product_id) {
             editProduct($product_id, $_POST);
         } else {
             $product_id = addProduct($_POST);
         }
 
-        header("Location: /admin/product.php?product_id=" . $product_id);
+        if (isset($_POST['save'])) {
+            header("Location: /admin/catalog.php");
+        } elseif (isset($_POST['applay'])) {
+            header("Location: /admin/product.php?product_id=" . $product_id);
+        }
+
         exit();
     } elseif (isset($_POST['load_image'])) {
         $message = uploadImage();
@@ -102,6 +107,7 @@ if (isset($_POST['image'])) {
                             placeholder="Цена товара" />
                     </div>
                     <button type="submit" name="save" class="button">Сохранить</button>
+                    <button type="submit" name="applay" class="button">Применить</button>
                 </div>
                 <div class="image-wrap">
                     <?php if (!empty($image)) : ?>
