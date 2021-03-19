@@ -5,4 +5,4 @@ define('ADMIN_DIR', basePath . '/public/admin');
 define('ENGINE_DIR', basePath . '/engine');
 define('UPLOADS_DIR', basePath . '/uploads');
 define('TEMPLATES_DIR', basePath . '/templates');
-define('IMAGES_DIR', PUBLIC_DIR . '/img');
+define('IMAGES_DIR', PUBLIC_DIR . '/img/');
