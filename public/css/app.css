@@ -183,13 +183,18 @@ td.action {
     margin: 15px 0;
 }
 
-.image-section {
+.product-section {
     display: flex;
     align-items: flex-start;
 }
 
 .image-wrap {
     max-width: 70%;
+}
+
+.product-image {
+    margin: 0 40px 20px 0;
+    max-width: 60%;
 }
 
 .full-image {

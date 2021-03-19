@@ -4,12 +4,12 @@ require __DIR__ . '/../config/config.php';
 require_once(ENGINE_DIR . '/functions.php');
 require_once(ENGINE_DIR . '/db_model.php');
 
-$image = [];
+$product = [];
 
-$image_id = isset($_GET['image_id']) ? $_GET['image_id'] : 0;
+$product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if ($image_id) {
-    $image = getProductImage($image_id);
+if ($product_id) {
+    $product_info = getProduct($product_id)[0];
 }
 ?>
 <!DOCTYPE html>
@@ -29,34 +29,32 @@ if ($image_id) {
 
     <div class="content">
         <div class="container">
-            <h1>Страница изображения</h1>
-            <p>Вывод изображения из базы данных в полном размере</p>
-
-            <div class="image-section">
-                <div class="image-wrap">
-                    <?php if (empty($image)) : ?>
+            <?php if (empty($product_info)) : ?>
+            <p>Нет товара в базе данных</p>
+            <?php else : ?>
+            <h1><?= $product_info['name'] ?></h1>
+            <div class="product-section">
+                <div class="product-image">
+                    <?php if (empty($product_info['image'])) : ?>
                     <p>Нет изображения в базе данных</p>
                     <?php else : ?>
-                    <img class="full-image" src="img/<?= $image['image'] ?>" alt="<?= $image['caption'] ?>">
+                    <img class="full-image" src="img/<?= $product_info['image'] ?>" alt="<?= $product_info['name'] ?>">
                     <?php endif; ?>
                 </div>
-                <div class="image-description">
-                    <div class="description-item">Название изображения: <?= $image['caption'] ?></div>
-                    <div class="description-item">Размер изображения: <?= $image['size'] ?></div>
-                    <div class="description-item">Число просмотров: <?= $image['views'] ?></div>
+                <div class="product-description">
+                    <div class="description-item">Наименование: <?= $product_info['name'] ?></div>
+                    <div class="description-item">Количество: <?= $product_info['quantity'] ?></div>
+                    <div class="description-item">Цена: <?= $product_info['price'] ?></div>
+                    <div class="description-item">Число просмотров: <?= $product_info['views'] ?></div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 
     <hr>
     <?php require_once(TEMPLATES_DIR . '/footer.php'); ?>
 
-    <?php require_once(TEMPLATES_DIR . '/modal.php'); ?>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="js/app.js"></script>
 </body>
 
 </html>
