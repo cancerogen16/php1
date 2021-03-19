@@ -192,6 +192,10 @@ td.action {
     max-width: 70%;
 }
 
+.upload {
+    margin-top: 20px;
+}
+
 .product-image {
     margin: 0 40px 20px 0;
     max-width: 60%;

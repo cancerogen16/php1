@@ -104,26 +104,24 @@ if (isset($_POST['image'])) {
                     <button type="submit" name="save" class="button">Сохранить</button>
                 </div>
                 <div class="image-wrap">
-                    <div class="product-image">
-                        <?php if (!empty($image)) : ?>
-                        <img class="product-image" src="/img/<?= $image ?>" alt="<?= $name ?>" width="300">
-                        <?php else : ?>
-                        <p>Нет изображения</p>
-                        <?php endif; ?>
-                        <div class="upload">
-                            <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
-                            <input type="file" name="file">
-                            <button type="submit" name="load_image" class="button">
-                                <?php if (!empty($image)) : ?>
-                                Заменить изображение
-                                <?php else : ?>
-                                Загрузить изображение
-                                <?php endif; ?>
-                            </button>
-                        </div>
-
-                        <div class="message"><?= $message ?></div>
+                    <?php if (!empty($image)) : ?>
+                    <img src="/img/<?= $image ?>" alt="<?= $name ?>" width="300">
+                    <?php else : ?>
+                    <p>Нет изображения</p>
+                    <?php endif; ?>
+                    <div class="upload">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                        <input type="file" name="file">
+                        <button type="submit" name="load_image" class="button">
+                            <?php if (!empty($image)) : ?>
+                            Заменить изображение
+                            <?php else : ?>
+                            Загрузить изображение
+                            <?php endif; ?>
+                        </button>
                     </div>
+
+                    <div class="message"><?= $message ?></div>
                 </div>
             </form>
         </div>
