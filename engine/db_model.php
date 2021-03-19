@@ -8,7 +8,8 @@ function connect_db() {
 }
 
 function get_db_result($request) {
-    $result = @mysqli_query(connect_db(), $request) or die(mysqli_error(connect_db()));
+    $db = connect_db();
+    $result = @mysqli_query($db, $request) or die(mysqli_error($db));
     $array_result = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $array_result[] = $row;
