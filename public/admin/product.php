@@ -2,7 +2,10 @@
 require __DIR__ . '/../../config/config.php';
 
 require_once(ENGINE_DIR . '/functions.php');
+require_once(ENGINE_DIR . '/upload.php');
 require_once(ENGINE_DIR . '/db_model.php');
+
+$message = '';
 
 $product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -17,10 +20,34 @@ if ($add_product) {
 $product_info = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if ($product_id) {
-        editProduct($product_id, $_POST);
-    } else {
-        $product_id = addProduct($_POST);
+    if (isset($_POST['save'])) {
+        if ($product_id) {
+            editProduct($product_id, $_POST);
+        } else {
+            $product_id = addProduct($_POST);
+        }
+
+        header("Location: /admin/product.php?product_id=" . $product_id);
+        exit();
+    } elseif (isset($_POST['load_image'])) {
+        if (isset($_FILES['file'])) {
+            $file = $_FILES['file'];
+
+            // проверяем, можно ли загружать изображение
+            $check = canUpload($file);
+
+            if ($check === true) {
+                $filename = $file['name'];
+
+                // загружаем изображение на сервер
+                if (move_uploaded_file($file['tmp_name'], IMAGES_DIR . $filename)) {
+                    $_POST['image'] = $filename;
+                }
+            } else {
+                // выводим сообщение об ошибке
+                $message = "<b>$check</b>";
+            }
+        }
     }
 } else {
     if ($product_id) {
@@ -75,45 +102,47 @@ if (isset($_POST['image'])) {
     <div class="content">
         <div class="container">
             <h1><?= $title ?></h1>
-
-            <div class="section">
+            <form class="product-edit" enctype="multipart/form-data" method="post" action="">
+                <div class="data-wrap">
+                    <input type="hidden" name="product_id" value="<?= $product_id ?>" />
+                    <input type="hidden" name="image" value="<?= $image ?>" />
+                    <div class="form-group"><label for="product_name">Название товара </label>
+                        <input type="text" name="name" value="<?= $name ?>" id="product_name"
+                            placeholder="Название товара" />
+                    </div>
+                    <div class="form-group"><label for="product_quantity">Количество товара </label>
+                        <input type="text" name="quantity" value="<?= $quantity ?>" id="product_quantity"
+                            placeholder="Количество товара" />
+                    </div>
+                    <div class="form-group"><label for="product_price">Цена товара </label>
+                        <input type="text" name="price" value="<?= $price ?>" id="product_price"
+                            placeholder="Цена товара" />
+                    </div>
+                    <button type="submit" name="save" class="button">Сохранить</button>
+                </div>
                 <div class="image-wrap">
-                    <form enctype="multipart/form-data" method="post">
-                        <input type="hidden" name="product_id" value="<?= $product_id ?>" />
-                        <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
-                        <div class="product-edit">
-                            <div class="product-info">
-                                <div class="form-group"><label for="product_name">Название товара </label>
-                                    <input type="text" name="name" value="<?= $name ?>" id="product_name"
-                                        placeholder="Название товара" />
-                                </div>
-                                <div class="form-group"><label for="product_quantity">Количество товара </label>
-                                    <input type="text" name="quantity" value="<?= $quantity ?>" id="product_quantity"
-                                        placeholder="Количество товара" />
-                                </div>
-                                <div class="form-group"><label for="product_price">Цена товара </label>
-                                    <input type="text" name="price" value="<?= $price ?>" id="product_price"
-                                        placeholder="Цена товара" />
-                                </div>
-
-                            </div>
-                            <div class="product-image">
-                                Изображение товара
+                    <div class="product-image">
+                        <?php if (!empty($image)) : ?>
+                        <img class="product-image" src="/img/<?= $image ?>" alt="<?= $name ?>" width="300">
+                        <?php else : ?>
+                        <p>Нет изображения</p>
+                        <?php endif; ?>
+                        <div class="upload">
+                            <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                            <input type="file" name="file">
+                            <button type="submit" name="load_image" class="button">
                                 <?php if (!empty($image)) : ?>
-                                <img class="product-image" src="/img/<?= $image ?>" alt="<?= $name ?>" width="40">
+                                Заменить изображение
                                 <?php else : ?>
-                                <p>Нет изображения</p>
+                                Загрузить изображение
                                 <?php endif; ?>
-                                <div class="form-group">
-                                    <input type="file" name="file">
-                                </div>
-                            </div>
+                            </button>
                         </div>
 
-                        <input class="button" type="submit" value="Сохранить" />
-                    </form>
+                        <div class="message"><?= $message ?></div>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
