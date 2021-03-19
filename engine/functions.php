@@ -106,3 +106,23 @@ function deleteImage($product_id) {
 
     return $deleted;
 }
+
+/**
+ * Запись в базу количества просмотров
+ *
+ * @param  string $product_id
+ * @return bool
+ */
+function setViews($product_id) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $result = false;
+
+    if ($product_id) {
+        $query = "UPDATE `product` SET `views`=`views`+1 WHERE product_id = '" . (int)$product_id . "'";
+
+        $result = update_db($query);
+    }
+
+    return $result;
+}

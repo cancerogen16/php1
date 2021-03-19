@@ -9,6 +9,7 @@ $product_info = [];
 $product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($product_id) {
+    setViews($product_id);
     $product_info = getProduct($product_id)[0];
 }
 ?>
