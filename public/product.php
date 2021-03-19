@@ -4,7 +4,7 @@ require __DIR__ . '/../config/config.php';
 require_once(ENGINE_DIR . '/functions.php');
 require_once(ENGINE_DIR . '/db_model.php');
 
-$product = [];
+$product_info = [];
 
 $product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
