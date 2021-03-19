@@ -27,6 +27,30 @@ body {
     padding: 10px;
 }
 
+td.number {
+    text-align: center;
+}
+
+td.name {
+    text-align: left;
+}
+
+td.image {
+    text-align: center;
+}
+
+td.price {
+    text-align: right;
+}
+
+td.quantity {
+    text-align: center;
+}
+
+td.action {
+    text-align: center;
+}
+
 .menu {
     display: flex;
     align-items: center;

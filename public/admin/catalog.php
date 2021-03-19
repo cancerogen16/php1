@@ -56,9 +56,9 @@ $products = getProducts();
                         <?php if (!empty($products)) : ?>
                         <?php foreach ($products as $p => $product) : ?>
                         <tr>
-                            <td><?= ($p + 1) ?></td>
-                            <td><?= $product['name'] ?></td>
-                            <td>
+                            <td class="number"><?= ($p + 1) ?></td>
+                            <td class="name"><?= $product['name'] ?></td>
+                            <td class="image">
                                 <?php if (!empty($product['image'])) : ?>
                                 <img class="product-image" src="/img/<?= $product['image'] ?>"
                                     alt="<?= $product['name'] ?>" width="64">
@@ -66,11 +66,12 @@ $products = getProducts();
                                 Нет изображения
                                 <?php endif; ?>
                             </td>
-                            <td><?= $product['price'] ?></td>
-                            <td><?= $product['quantity'] ?></td>
-                            <td><a class="button" href="product.php?product_id=<?= $product['product_id'] ?>"
+                            <td class="price"><?= $product['price'] ?></td>
+                            <td class="quantity"><?= $product['quantity'] ?></td>
+                            <td class="action"><a class="button"
+                                    href="product.php?product_id=<?= $product['product_id'] ?>"
                                     title="Редактировать">Редактировать</a></td>
-                            <td><a class="button"
+                            <td class="action"><a class="button"
                                     href="catalog.php?delete_product=1&product_id=<?= $product['product_id'] ?>"
                                     title="Удалить">Удалить</a></td>
                         </tr>
