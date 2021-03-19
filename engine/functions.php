@@ -54,14 +54,9 @@ function addProduct($data) {
 function editProduct($product_id, $data) {
     require_once(__DIR__ . '/../config/db.php');
 
-    $query = "UPDATE product SET name = '" . protect($data['name']) . "', quantity = '" . (int)$data['quantity'] . "', price = '" . (float)$data['price'] . "'  WHERE product_id = '" . (int)$product_id . "'";
+    $query = "UPDATE product SET name = '" . protect($data['name']) . "', quantity = '" . (int)$data['quantity'] . "', price = '" . (float)$data['price'] . "', image = '" . protect($data['image']) . "'  WHERE product_id = '" . (int)$product_id . "'";
 
     update_db($query);
-
-    if (isset($data['image'])) {
-        $query = "UPDATE product SET image = '" . protect($data['image']) . "' WHERE product_id = '" . (int)$product_id . "'";
-        update_db($query);
-    }
 
     return true;
 }
