@@ -4,7 +4,7 @@ require __DIR__ . '/../config/config.php';
 require_once(ENGINE_DIR . '/functions.php');
 require_once(ENGINE_DIR . '/db_model.php');
 
-$products = getProducts();
+$products = getProducts('views', 'desc');
 ?>
 <!DOCTYPE html>
 <html lang="ru">
