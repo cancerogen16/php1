@@ -70,9 +70,39 @@ function editProduct($product_id, $data) {
 function deleteProduct($product_id) {
     require_once(__DIR__ . '/../config/db.php');
 
+    deleteImage($product_id);
+
     $query = "DELETE FROM product WHERE product_id = '" . (int)$product_id . "'";
 
     update_db($query);
 
     return true;
+}
+
+/**
+ * Удаление изображения товара, если оно использовалось только для одного товара
+ *
+ * @param  string $product_id
+ * @return bool
+ */
+function deleteImage($product_id) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $deleted = false;
+
+    $query = "SELECT image FROM product WHERE product_id = '" . (int)$product_id . "'";
+
+    $image = get_db_result($query)[0]['image'];
+
+    if ($image) {
+        $query = "SELECT * FROM product WHERE image = '" . protect($image) . "'";
+
+        $images = get_db_result($query);
+
+        if (count($images) < 2) {
+            $deleted = unlink(IMAGES_DIR . $image);
+        }
+    }
+
+    return $deleted;
 }
