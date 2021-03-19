@@ -46,6 +46,7 @@ body {
 
 .button:hover {
     background: #ccc;
+    cursor: pointer;
 }
 
 .images {
@@ -174,12 +175,16 @@ body {
     align-items: flex-start;
 }
 
-.product-image {
-    padding: 20px;
+.data-wrap {
+    padding: 15px 20px;
 }
 
-.product-image img {
-    max-width: 100px;
+.image-wrap {
+    padding: 15px 20px;
+}
+
+.image-wrap img {
+    max-width: 400px;
 }
 
 @media only screen and (max-width: 700px) {
