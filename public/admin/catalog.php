@@ -61,7 +61,7 @@ $products = getProducts();
                             <td>
                                 <?php if (!empty($product['image'])) : ?>
                                 <img class="product-image" src="/img/<?= $product['image'] ?>"
-                                    alt="<?= $product['name'] ?>" width="40">
+                                    alt="<?= $product['name'] ?>" width="64">
                                 <?php else : ?>
                                 Нет изображения
                                 <?php endif; ?>
