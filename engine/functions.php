@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Получение из базы данных товаров, отсортированных по популярности
+ * Получение из базы данных товаров
  *
- * @return array
+ * @return array db_result
  */
 function getProducts()
 {
@@ -15,7 +15,7 @@ function getProducts()
 }
 
 /**
- * Получение товара из базы
+ * Получение товара из базы данных
  *
  * @param  string $product_id
  * @return array
@@ -31,36 +31,51 @@ function getProduct($product_id)
     return $row;
 }
 
+
+/**
+ * Добавление товара в базу данных
+ *
+ * @param  mixed $data
+ * @return int insert_id
+ */
 function addProduct($data)
 {
     require_once(__DIR__ . '/../config/db.php');
 
-    $name = (empty($data['name'])) ? '' : $data['name'];
-    $quantity = (empty($data['quantity'])) ? 0 : $data['quantity'];
-    $price = (empty($data['price'])) ? 0 : $data['price'];
+    $query = "INSERT INTO product (name, quantity, price, image, views) VALUES ('" . protect($data['name']) . "', '" . (int)$data['quantity'] . "', '" . (float)$data['price'] . "', '" . protect($data['image']) . "', 0)";
 
-    $query = "INSERT INTO product (name, quantity, price, views) VALUES ('$name', '$quantity', '$price', 0)";
-
-    update_db($query);
-
-    return true;
+    return update_db($query);
 }
 
+/**
+ * Редактирование товара в базе данных
+ *
+ * @param  string $product_id
+ * @param  array $data
+ * @return true
+ */
 function editProduct($product_id, $data)
 {
     require_once(__DIR__ . '/../config/db.php');
 
-    $name = (empty($data['name'])) ? '' : $data['name'];
-    $quantity = (empty($data['quantity'])) ? 0 : $data['quantity'];
-    $price = (empty($data['price'])) ? 0 : $data['price'];
-
-    $query = "UPDATE product SET name = '" . $name . "', quantity = '" . $quantity . "', price = '" . $price . "'  WHERE product_id = '" . (int)$product_id . "'";
+    $query = "UPDATE product SET name = '" . protect($data['name']) . "', quantity = '" . (int)$data['quantity'] . "', price = '" . (float)$data['price'] . "'  WHERE product_id = '" . (int)$product_id . "'";
 
     update_db($query);
+
+    if (isset($data['image'])) {
+        $query = "UPDATE product SET image = '" . protect($data['image']) . "' WHERE product_id = '" . (int)$product_id . "'";
+        update_db($query);
+    }
 
     return true;
 }
 
+/**
+ * Удаление товара из базы данных
+ *
+ * @param  string $product_id
+ * @return void
+ */
 function deleteProduct($product_id)
 {
     require_once(__DIR__ . '/../config/db.php');
