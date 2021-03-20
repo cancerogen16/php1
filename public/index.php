@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
 <?php
 require __DIR__ . '/../config/config.php';
 ?>
+<!DOCTYPE html>
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">

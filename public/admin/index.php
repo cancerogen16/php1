@@ -1,8 +1,15 @@
-<!DOCTYPE html>
-<html lang="ru">
 <?php
 require __DIR__ . '/../../config/config.php';
+
+require_once(ENGINE_DIR . '/functions.php');
+
+if (!isAdmin()) {
+    header("Location: /login.php");
+    exit();
+}
 ?>
+<!DOCTYPE html>
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
