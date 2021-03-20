@@ -60,7 +60,7 @@ td.action {
     margin-left: 50px;
 }
 
-.button {
+.btn {
     padding: 10px;
     border: 1px solid #888;
     border-radius: 8px;
@@ -69,7 +69,7 @@ td.action {
     text-decoration: none;
 }
 
-.button:hover {
+.btn:hover {
     background: #ccc;
     cursor: pointer;
 }

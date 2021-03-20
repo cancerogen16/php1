@@ -106,8 +106,8 @@ if (isset($_POST['image'])) {
                         <input type="text" name="price" value="<?= $price ?>" id="product_price"
                             placeholder="Цена товара" />
                     </div>
-                    <button type="submit" name="save" class="button">Сохранить</button>
-                    <button type="submit" name="applay" class="button">Применить</button>
+                    <button type="submit" name="save" class="btn">Сохранить</button>
+                    <button type="submit" name="applay" class="btn">Применить</button>
                 </div>
                 <div class="image-wrap">
                     <?php if (!empty($image)) : ?>
@@ -118,7 +118,7 @@ if (isset($_POST['image'])) {
                     <div class="upload">
                         <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
                         <input type="file" name="file">
-                        <button type="submit" name="load_image" class="button">
+                        <button type="submit" name="load_image" class="btn">
                             <?php if (!empty($image)) : ?>
                             Заменить изображение
                             <?php else : ?>

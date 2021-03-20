@@ -68,10 +68,10 @@ $products = getProducts();
                             </td>
                             <td class="price"><?= $product['price'] ?></td>
                             <td class="quantity"><?= $product['quantity'] ?></td>
-                            <td class="action"><a class="button"
+                            <td class="action"><a class="btn"
                                     href="product.php?product_id=<?= $product['product_id'] ?>"
                                     title="Редактировать">Редактировать</a></td>
-                            <td class="action"><a class="button"
+                            <td class="action"><a class="btn"
                                     href="catalog.php?delete_product=1&product_id=<?= $product['product_id'] ?>"
                                     title="Удалить">Удалить</a></td>
                         </tr>
@@ -85,7 +85,7 @@ $products = getProducts();
                 </table>
 
                 <div class="add-product">
-                    <a class="button" href="product.php?add_product=1" title="Добавить товар">Добавить
+                    <a class="btn" href="product.php?add_product=1" title="Добавить товар">Добавить
                         товар</a>
                 </div>
             </div>
