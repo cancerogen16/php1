@@ -50,6 +50,7 @@ if ($cart = getCart($user_id)) {
                             <th>Изображение</th>
                             <th>Цена</th>
                             <th>Количество</th>
+                            <th>Всего</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -72,11 +73,12 @@ if ($cart = getCart($user_id)) {
                             </td>
                             <td class="price"><?= $product['price'] ?></td>
                             <td class="quantity"><?= $product['quantity'] ?></td>
+                            <td class="price"><?= $product['total'] ?></td>
                             <td class="action"><a class="btn"
-                                    href="product.php?product_id=<?= $product['product_id'] ?>"
+                                    href="cart.php?addToCart=1&product_id=<?= $product['product_id'] ?>"
                                     title="Добавить">Добавить</a></td>
                             <td class="action"><a class="btn"
-                                    href="catalog.php?delete_product=1&product_id=<?= $product['product_id'] ?>"
+                                    href="cart.php?removeFromCart=1&product_id=<?= $product['product_id'] ?>"
                                     title="Удалить">Удалить</a></td>
                         </tr>
                         <?php endforeach; ?>
@@ -86,6 +88,14 @@ if ($cart = getCart($user_id)) {
                         </tr>
                         <?php endif; ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">Итого</td>
+                            <td><?= $cart['count'] ?> товара</td>
+                            <td class="price"><?= $cart['total'] ?></td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
