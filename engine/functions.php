@@ -10,6 +10,8 @@
 function getProducts($sort = '', $order = '') {
     require_once(__DIR__ . '/../config/db.php');
 
+    $products_data = [];
+
     $query = "SELECT * FROM product WHERE 1";
 
     if ($sort) {
@@ -20,7 +22,26 @@ function getProducts($sort = '', $order = '') {
         }
     }
 
-    return get_db_result($query);
+    if (!empty($products = get_db_result($query))) {
+        foreach ($products as $product) {
+            $image = $product['image'];
+
+            if (!$image) {
+                $image = 'noimage.jpg';
+            }
+            $products_data[] = [
+                'product_id' => $product['product_id'],
+                'name' => $product['name'],
+                'quantity' => $product['quantity'],
+                'price' => number_format($product['price'], 0, ',', ' '),
+                'image' => $image,
+                'views' => $product['views'],
+                'date_created' => $product['date_created'],
+            ];
+        }
+    }
+
+    return $products_data;
 }
 
 /**
