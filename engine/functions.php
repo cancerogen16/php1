@@ -55,7 +55,7 @@ function getProduct($product_id) {
 
     $query = "SELECT * FROM product WHERE product_id = '" . (int)$product_id . "'";
 
-    $row = get_db_result($query);
+    $row = get_db_row($query);
 
     return $row;
 }
@@ -243,4 +243,81 @@ function getUser($username) {
     $results = get_db_result($query);
 
     return $results;
+}
+
+function addToCart($product_id, $user_id) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $products = [];
+
+    $date_added = date('Y-m-d H:i:s');
+
+    if ($user_id) {
+        $query = "SELECT * FROM cart WHERE user_id = '" . (int)$user_id . "'";
+    } else {
+        $query = "SELECT * FROM cart WHERE session_id = '" . session_id() . "'";
+    }
+
+    $result = get_db_row($query);
+
+    if (!empty($result)) {
+        $cart_id = (int)$result['cart_id'];
+
+        $products = json_decode($result['products'], true);
+
+        if ($products) {
+            if (isset($products[$product_id])) {
+                $products[$product_id]++;
+            } else {
+                $products[$product_id] = 1;
+            }
+        } else {
+            $products[$product_id] = 1;
+        }
+
+        $query = "UPDATE `cart` SET products = '" . json_encode($products) . "', session_id = '" . session_id() . "', date_added = '" . $date_added . "'  WHERE cart_id = '" . $cart_id . "'";
+    } else {
+        $query = "INSERT INTO `cart` (user_id, products, session_id, date_added) VALUES ('" . (int)$user_id . "', '" . $products . "', '" . session_id() . "', '" . $date_added . "')";
+    }
+
+    return update_db($query);
+}
+
+function getCart($user_id) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $cart = [];
+
+    if ($user_id) {
+        $query = "SELECT * FROM cart WHERE user_id = '" . (int)$user_id . "'";
+    } else {
+        $query = "SELECT * FROM cart WHERE session_id = '" . session_id() . "'";
+    }
+
+    $result = get_db_row($query);
+
+    if ($result) {
+        $cart = $result;
+
+        $count = 0;
+        $total = 0;
+
+        $products = json_decode($result['products'], true);
+
+        foreach ($products as $product_id => $quantity) {
+            $product = getProduct($product_id);
+
+            $cart['products'][$product_id] = $product;
+            $cart['products'][$product_id]['quantity'] = $quantity;
+
+            $count++;
+
+            $total += $product['price'];
+        }
+
+        $cart['count'] = $count;
+        $cart['total'] = $total;
+    }
+
+    return $cart;
 }
