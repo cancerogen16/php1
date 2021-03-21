@@ -27,7 +27,7 @@ function getProducts($sort = '', $order = '') {
  * Получение товара из базы данных
  *
  * @param  string $product_id
- * @return array
+ * @return array db_result
  */
 function getProduct($product_id) {
     require_once(__DIR__ . '/../config/db.php');
@@ -167,7 +167,7 @@ function existUser($username): bool {
  *
  * @param  string $username
  * @param  string $password
- * @return void
+ * @return int insert_id
  */
 function addUser($username, $password) {
     require_once(__DIR__ . '/../config/db.php');
@@ -183,7 +183,7 @@ function addUser($username, $password) {
  * Получение данных пользователя из базы по его имени
  *
  * @param  string $username
- * @return void
+ * @return array
  */
 function getUser($username) {
     require_once(__DIR__ . '/../config/db.php');
@@ -195,35 +195,17 @@ function getUser($username) {
     return $results;
 }
 
-function getUser2($id, $username) {
+/**
+ * Получение из базы всех пользователей
+ *
+ * @return array
+ */
+function getUsers() {
     require_once(__DIR__ . '/../config/db.php');
 
-    $message = '';
-
-    $query = "SELECT id, username, password FROM user WHERE username = '" . protect($username) . "'";
+    $query = "SELECT * FROM user WHERE 1";
 
     $results = get_db_result($query);
 
-    if (count($results) == 1) {
-        if (password_verify($password, $hashed_password)) {
-            // Password is correct, so start a new session
-            session_start();
-
-            // Store data in session variables
-            $_SESSION["loggedin"] = true;
-            $_SESSION["id"] = $id;
-            $_SESSION["username"] = $username;
-
-            // Redirect user to welcome page
-            header("location: index.php");
-        } else {
-            // Display an error message if password is not valid
-            $password_err = "Пароль неверный";
-        }
-    } else {
-        // Display an error message if username doesn't exist
-        $username_err = "No account found with that username.";
-    }
-
-    return $message;
+    return $results;
 }
