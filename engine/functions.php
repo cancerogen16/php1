@@ -90,6 +90,23 @@ function deleteProduct($product_id) {
 }
 
 /**
+ * Валидация товара при сохранении
+ * 
+ * @param array $data
+ * 
+ * @return array errors
+ */
+function validateProduct($data = []) {
+    $errors = [];
+
+    if (trim($data['name']) == '') {
+        $errors['name'] = 'Название товара обязательно!';
+    }
+
+    return $errors;
+}
+
+/**
  * Удаление изображения товара, если оно использовалось только для одного товара
  *
  * @param  string $product_id
