@@ -1,5 +1,13 @@
 <?php
+session_start();
+
 require __DIR__ . '/../config/config.php';
+
+$title = 'Главная страница';
+
+if (!empty($_SESSION["username"])) {
+    $title = 'Привет, <b>' . htmlspecialchars($_SESSION["username"]) . '</b>. Добро пожаловать на сайт.';
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -19,7 +27,7 @@ require __DIR__ . '/../config/config.php';
 
     <div class="content">
         <div class="container">
-            <h1>Главная страница</h1>
+            <h1><?= $title ?></h1>
         </div>
     </div>
 
