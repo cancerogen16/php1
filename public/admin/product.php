@@ -111,7 +111,7 @@ if (isset($_POST['image'])) {
                     <div class="form-group"><label for="product_name">Название товара </label>
                         <input type="text" name="name" value="<?= $name ?>" id="product_name"
                             placeholder="Название товара" />
-                        <span class="field-error"><?php echo $username_err; ?></span>
+                        <span class="field-error"><?php echo $name_err; ?></span>
                     </div>
                     <div class="form-group"><label for="product_quantity">Количество товара </label>
                         <input type="text" name="quantity" value="<?= $quantity ?>" id="product_quantity"
