@@ -15,7 +15,7 @@ if (!isAdmin()) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Администрирование каталога</title>
+    <title>Панель администратора</title>
     <link rel="stylesheet" href="/css/app.css">
 </head>
 
@@ -25,7 +25,14 @@ if (!isAdmin()) {
 
     <div class="content">
         <div class="container">
-            <h1>Администрирование каталога</h1>
+            <div class="page-header">
+                <h1>Привет, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Добро пожаловать в панель
+                    администратора.
+                </h1>
+            </div>
+            <p>
+                <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+            </p>
         </div>
     </div>
 
