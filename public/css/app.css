@@ -140,6 +140,16 @@ td.action {
     justify-content: space-between;
 }
 
+.header-row__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.cart-wrap {
+    margin: 0 30px;
+}
+
 .account {
     display: flex;
     align-items: center;
