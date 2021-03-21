@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require __DIR__ . '/../../config/config.php';
 
 require_once(ENGINE_DIR . '/functions.php');
@@ -31,7 +33,7 @@ if (!isAdmin()) {
                 </h1>
             </div>
             <p>
-                <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+                <a href="/logout.php" class="btn btn-danger">Выйти из своей учетной записи</a>
             </p>
         </div>
     </div>
