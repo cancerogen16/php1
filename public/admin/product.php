@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$errors = validateProduct($_POST)) 
     }
 } else {
     if ($product_id) {
-        $product_info = getProduct($product_id)[0];
+        $product_info = getProduct($product_id);
     }
 }
 
