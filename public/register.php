@@ -39,7 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
         if (addUser($username, $password)) {
-            header("location: login.php");
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $id;
+            $_SESSION["username"] = $username;
+
+            header("location: /index.php");
         } else {
             $message = "Что-то пошло не так. Попробуйте ещё раз";
         }
