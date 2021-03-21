@@ -21,6 +21,10 @@ body {
     width: 100%;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .table th,
 .table td {
     border: 1px solid #bbb;
@@ -99,7 +103,14 @@ td.action {
     cursor: pointer;
 }
 
+.btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .form-control {
+    box-sizing: border-box;
     display: block;
     width: 100%;
     padding: .375rem .75rem;
@@ -115,6 +126,30 @@ td.action {
     appearance: none;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.field-error {
+    color: red;
+    display: block;
+    font-size: 12px;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.account {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.login,
+.logout,
+.register {
+    margin: 0 10px;
 }
 
 .products {
@@ -256,8 +291,6 @@ td.action {
 
 .form-group {
     margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
 }
 
 .form-group label {
