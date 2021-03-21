@@ -19,7 +19,9 @@ if (!isAdmin()) {
     exit();
 }
 
-$message = $name_err = '';
+$message = '';
+
+$errors = [];
 
 $product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -33,7 +35,7 @@ if ($add_product) {
 
 $product_info = [];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$errors = validateProduct($_POST)) {
     if (isset($_POST['save']) || isset($_POST['apply'])) {
         if ($product_id) {
             editProduct($product_id, $_POST);
@@ -84,6 +86,12 @@ if (isset($_POST['image'])) {
     $image = $product_info['image'];
 } else {
     $image = '';
+}
+
+if (isset($errors['name'])) {
+    $name_err = $errors['name'];
+} else {
+    $name_err = '';
 }
 ?>
 <!DOCTYPE html>
