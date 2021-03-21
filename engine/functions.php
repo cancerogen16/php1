@@ -297,12 +297,13 @@ function getCart($user_id) {
     $result = get_db_row($query);
 
     if ($result) {
-        $cart = $result;
-
         $count = 0;
         $total = 0;
 
         $products = json_decode($result['products'], true);
+
+        $cart = $result;
+        $cart['products'] = [];
 
         foreach ($products as $product_id => $quantity) {
             $product = getProduct($product_id);
