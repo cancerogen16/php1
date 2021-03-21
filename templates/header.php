@@ -11,7 +11,12 @@ require_once(ENGINE_DIR . '/db_model.php');
                 <?php require_once(TEMPLATES_DIR . '/menu.php'); ?>
             </div>
             <div class="header-row__right">
-                <?php require_once(TEMPLATES_DIR . '/account.php'); ?>
+                <div class="cart-wrap">
+                    <?php require_once(TEMPLATES_DIR . '/cart.php'); ?>
+                </div>
+                <div class="account-wrap">
+                    <?php require_once(TEMPLATES_DIR . '/account.php'); ?>
+                </div>
             </div>
         </div>
     </div>
