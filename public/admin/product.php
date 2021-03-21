@@ -1,4 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
+ini_set('error_reporting', (string)E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+
 session_start();
 
 require __DIR__ . '/../../config/config.php';
@@ -12,7 +19,7 @@ if (!isAdmin()) {
     exit();
 }
 
-$message = '';
+$message = $name_err = '';
 
 $product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -104,6 +111,7 @@ if (isset($_POST['image'])) {
                     <div class="form-group"><label for="product_name">Название товара </label>
                         <input type="text" name="name" value="<?= $name ?>" id="product_name"
                             placeholder="Название товара" />
+                        <span class="field-error"><?php echo $username_err; ?></span>
                     </div>
                     <div class="form-group"><label for="product_quantity">Количество товара </label>
                         <input type="text" name="quantity" value="<?= $quantity ?>" id="product_quantity"
