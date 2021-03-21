@@ -54,7 +54,8 @@ if ($product_id) {
                 <div class="product-description">
                     <div class="description-item">Наименование: <?= $product_info['name'] ?></div>
                     <div class="description-item">Количество: <?= $product_info['quantity'] ?></div>
-                    <div class="description-item">Цена: <?= $product_info['price'] ?></div>
+                    <div class="description-item">Цена: <?= number_format((float)$product_info['price'], 0, ',', ' ') ?>
+                    </div>
                     <div class="description-item">Число просмотров: <?= $product_info['views'] ?></div>
                 </div>
             </div>
