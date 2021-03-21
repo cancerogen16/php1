@@ -39,9 +39,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
         if (addUser($username, $password)) {
-            $_SESSION["loggedin"] = true;
-            $_SESSION["id"] = $id;
-            $_SESSION["username"] = $username;
+            $user = getUser($username);
+
+            if (count($user) == 1) {
+                $user = reset($user);
+
+                $_SESSION["loggedin"] = true;
+                $_SESSION["username"] = $username;
+                $_SESSION["user_role"] = $user['user_role'];
+            } else {
+                $username_err = "Не найден аккаунт с таким логином";
+            }
 
             header("location: /index.php");
         } else {

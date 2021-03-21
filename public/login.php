@@ -36,12 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = reset($user);
 
             $hashed_password = $user['password'];
-            $id = $user['id'];
 
             if (password_verify($password, $hashed_password)) {
                 $_SESSION["loggedin"] = true;
-                $_SESSION["id"] = $id;
                 $_SESSION["username"] = $username;
+                $_SESSION["user_role"] = $user['user_role'];
 
                 header("location: /index.php");
             } else {
