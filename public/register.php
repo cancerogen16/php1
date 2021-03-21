@@ -10,7 +10,6 @@ $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate username
     if (empty(trim($_POST["username"]))) {
         $username_err = "Введите ваш логин";
     } else {
@@ -21,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Validate password
     if (empty(trim($_POST["password"]))) {
         $password_err = "Введите ваш пароль";
     } elseif (strlen(trim($_POST["password"])) < 6) {
@@ -30,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = trim($_POST["password"]);
     }
 
-    // Validate confirm password
     if (empty(trim($_POST["confirm_password"]))) {
         $confirm_password_err = "Пожалуйста, подтвердите свой пароль";
     } else {
@@ -40,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Check input errors before inserting in database
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
         if (addUser($username, $password)) {
             header("location: login.php");

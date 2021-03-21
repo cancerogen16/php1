@@ -21,21 +21,18 @@ $username_err = $password_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Check if username is empty
     if (empty(trim($_POST["username"]))) {
         $username_err = "Введите ваш логин";
     } else {
         $username = trim($_POST["username"]);
     }
 
-    // Check if password is empty
     if (empty(trim($_POST["password"]))) {
         $password_err = "Введите ваш пароль";
     } else {
         $password = trim($_POST["password"]);
     }
 
-    // Validate credentials
     if (empty($username_err) && empty($password_err)) {
         $user = getUser($username);
 
