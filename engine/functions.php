@@ -137,10 +137,21 @@ function setViews($product_id) {
     return $result;
 }
 
+/**
+ * Определение пользователя по роли в сессии
+ *
+ * @return bool
+ */
 function isAdmin(): bool {
     return isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ? true : false;
 }
 
+/**
+ * Найден пользователь в базе по имени
+ *
+ * @param  string $username
+ * @return bool
+ */
 function existUser($username): bool {
     require_once(__DIR__ . '/../config/db.php');
 
@@ -151,6 +162,13 @@ function existUser($username): bool {
     return (count($results) == 1) ? false : true;
 }
 
+/**
+ * Добавление пользователя в базу
+ *
+ * @param  string $username
+ * @param  string $password
+ * @return void
+ */
 function addUser($username, $password) {
     require_once(__DIR__ . '/../config/db.php');
 
@@ -161,6 +179,12 @@ function addUser($username, $password) {
     return update_db($query);
 }
 
+/**
+ * Получение данных пользователя из базы по его имени
+ *
+ * @param  string $username
+ * @return void
+ */
 function getUser($username) {
     require_once(__DIR__ . '/../config/db.php');
 
