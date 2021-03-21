@@ -72,11 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <header class="header">
-        <div class="container">
-            <h2>Авторизация пользователя</h2>
-        </div>
-    </header>
+    <?php require_once(TEMPLATES_DIR . '/header.php'); ?>
     <hr>
 
     <div class="content">
