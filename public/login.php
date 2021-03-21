@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <header class="header">
         <div class="container">
-            <h2>Панель администратора</h2>
+            <h2>Авторизация пользователя</h2>
         </div>
     </header>
     <hr>
