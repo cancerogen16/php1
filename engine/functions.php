@@ -200,7 +200,7 @@ function addUser($username, $password) {
 function getUser($username) {
     require_once(__DIR__ . '/../config/db.php');
 
-    $query = "SELECT id, username, password FROM user WHERE username = '" . protect($username) . "'";
+    $query = "SELECT * FROM user WHERE username = '" . protect($username) . "'";
 
     $results = get_db_result($query);
 
