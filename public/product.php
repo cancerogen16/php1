@@ -13,13 +13,27 @@ require __DIR__ . '/../config/config.php';
 require_once(ENGINE_DIR . '/functions.php');
 require_once(ENGINE_DIR . '/db_model.php');
 
-$product_info = [];
+$product_info = [
+    'name' => ''
+];
 
 $product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
+$addToCart = filter_input(INPUT_GET, 'addToCart', FILTER_SANITIZE_SPECIAL_CHARS);
+
 if ($product_id) {
+    if ($addToCart) {
+        $user_id = 0;
+
+        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"]) {
+            $user_id = (int)$_SESSION["user_id"];
+        }
+
+        addToCart($product_id, $user_id);
+    }
+
     setViews($product_id);
-    $product_info = getProduct($product_id)[0];
+    $product_info = getProduct($product_id);
 }
 ?>
 <!DOCTYPE html>
@@ -57,6 +71,10 @@ if ($product_id) {
                     <div class="description-item">Цена: <?= number_format((float)$product_info['price'], 0, ',', ' ') ?>
                     </div>
                     <div class="description-item">Число просмотров: <?= $product_info['views'] ?></div>
+                    <div class="product-cart">
+                        <a class="btn" href="product.php?addToCart=1&product_id=<?= $product_info['product_id'] ?>"
+                            title="Добавить товар в корзину">Добавить в корзину</a>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>
