@@ -310,10 +310,12 @@ function getCart($user_id) {
 
             $cart['products'][$product_id] = $product;
             $cart['products'][$product_id]['quantity'] = $quantity;
+            $cart['products'][$product_id]['price'] = number_format((float)$product['price'], 0, ',', ' ');
+            $cart['products'][$product_id]['total'] = number_format($quantity * (float)$product['price'], 0, ',', ' ');
 
             $count++;
 
-            $total += $product['price'];
+            $total += $quantity * $product['price'];
         }
 
         $cart['count'] = $count;
