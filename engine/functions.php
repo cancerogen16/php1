@@ -136,3 +136,70 @@ function setViews($product_id) {
 
     return $result;
 }
+
+function isAdmin(): bool {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ? true : false;
+}
+
+function existUser($username): bool {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $query = "SELECT id FROM user WHERE username = '" . protect($username) . "'";
+
+    $results = get_db_result($query);
+
+    return (count($results) == 1) ? false : true;
+}
+
+function addUser($username, $password) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO user (username, password) VALUES ('" . protect($username) . "', '" . $password_hash . "')";
+
+    return update_db($query);
+}
+
+function getUser($username) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $query = "SELECT id, username, password FROM user WHERE username = '" . protect($username) . "'";
+
+    $results = get_db_result($query);
+
+    return $results;
+}
+
+function getUser2($id, $username) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $message = '';
+
+    $query = "SELECT id, username, password FROM user WHERE username = '" . protect($username) . "'";
+
+    $results = get_db_result($query);
+
+    if (count($results) == 1) {
+        if (password_verify($password, $hashed_password)) {
+            // Password is correct, so start a new session
+            session_start();
+
+            // Store data in session variables
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $id;
+            $_SESSION["username"] = $username;
+
+            // Redirect user to welcome page
+            header("location: index.php");
+        } else {
+            // Display an error message if password is not valid
+            $password_err = "Пароль неверный";
+        }
+    } else {
+        // Display an error message if username doesn't exist
+        $username_err = "No account found with that username.";
+    }
+
+    return $message;
+}
