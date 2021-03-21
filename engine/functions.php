@@ -172,9 +172,21 @@ function existUser($username): bool {
 function addUser($username, $password) {
     require_once(__DIR__ . '/../config/db.php');
 
+    $ip = $_SERVER['REMOTE_ADDR'];
+
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO user (username, password) VALUES ('" . protect($username) . "', '" . $password_hash . "')";
+    $query = "SELECT * FROM user WHERE 1"; // получение из базы всех пользователей
+
+    $results = get_db_result($query);
+
+    if (count($results) == 0) { // если пользователь первый
+        $user_role = 'admin';
+    } else {
+        $user_role = 'customer';
+    }
+
+    $query = "INSERT INTO user (username, password, user_role, ip) VALUES ('" . protect($username) . "', '" . $password_hash . "', '" . $user_role . "', '" . $ip . "')";
 
     return update_db($query);
 }
@@ -189,21 +201,6 @@ function getUser($username) {
     require_once(__DIR__ . '/../config/db.php');
 
     $query = "SELECT id, username, password FROM user WHERE username = '" . protect($username) . "'";
-
-    $results = get_db_result($query);
-
-    return $results;
-}
-
-/**
- * Получение из базы всех пользователей
- *
- * @return array
- */
-function getUsers() {
-    require_once(__DIR__ . '/../config/db.php');
-
-    $query = "SELECT * FROM user WHERE 1";
 
     $results = get_db_result($query);
 
