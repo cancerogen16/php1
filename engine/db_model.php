@@ -17,6 +17,16 @@ function get_db_result($request) {
     return $array_result;
 }
 
+function get_db_row($request) {
+    $db = connect_db();
+    $result = @mysqli_query($db, $request) or die(mysqli_error($db));
+    $array_result = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $array_result = $row;
+    }
+    return $array_result;
+}
+
 function update_db($request) {
     $db = connect_db();
     @mysqli_query($db, $request) or die(mysqli_error($db));
