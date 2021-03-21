@@ -53,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $_SESSION["loggedin"] = true;
                 $_SESSION["username"] = $username;
+                $_SESSION["user_id"] = $user['user_id'];
                 $_SESSION["user_role"] = $user['user_role'];
             } else {
                 $username_err = "Не найден аккаунт с таким логином";
