@@ -1,17 +1,13 @@
 <?php
 session_start();
 
-require __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/config.php';
 
 require_once(ENGINE_DIR . '/functions.php');
 require_once(ENGINE_DIR . '/db_model.php');
 
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    if (isAdmin()) {
-        header("location: admin/index.php");
-    } else {
-        header("Location: /index.php");
-    }
+    header("Location: /index.php");
 
     exit;
 }
