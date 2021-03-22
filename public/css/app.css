@@ -158,6 +158,7 @@ td.action {
 .cart-content {
     background: white;
     display: none;
+    font-size: 80%;
     position: absolute;
 }
 
