@@ -84,17 +84,19 @@ if ($cart = getCart($user_id)) {
                         <?php endforeach; ?>
                         <?php else : ?>
                         <tr>
-                            <td colspan="10">Нет товаров</td>
+                            <td colspan="10">Нет товаров в корзине</td>
                         </tr>
                         <?php endif; ?>
                     </tbody>
                     <tfoot>
+                        <?php if (!empty($products)) : ?>
                         <tr>
                             <td colspan="4">Итого</td>
-                            <td><?= $cart['count'] ?> товара</td>
+                            <td><?= $cart['count'] ?></td>
                             <td class="price"><?= $cart['total'] ?></td>
                             <td colspan="2"></td>
                         </tr>
+                        <?php endif; ?>
                     </tfoot>
                 </table>
             </div>
