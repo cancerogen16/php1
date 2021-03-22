@@ -35,8 +35,8 @@ if ($add_product) {
 
 $product_info = [];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$errors = validateProduct($_POST)) {
-    if (isset($_POST['save']) || isset($_POST['apply'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ((isset($_POST['save']) || isset($_POST['apply'])) && !$errors = validateProduct($_POST)) {
         if ($product_id) {
             editProduct($product_id, $_POST);
         } else {
