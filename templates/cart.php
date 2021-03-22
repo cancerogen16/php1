@@ -13,7 +13,7 @@ if ($cart = getCart($user_id)) {
 ?>
 
 <div class="header-cart">
-    <a class="cart__link" href="/cart.php">Корзина (<?= $cart['count'] ?>)</a>
+    <a class="cart__link" href="/cart.php">Корзина (<?= (isset($cart['count'])) ? $cart['count'] : '0'; ?>)</a>
     <?php if (!empty($cart_products)) : ?>
     <div class="cart-content">
         <table>
