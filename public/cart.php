@@ -19,6 +19,21 @@ if (isset($_SESSION["user_id"]) && $_SESSION["user_id"]) {
     $user_id = (int)$_SESSION["user_id"];
 }
 
+$product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
+$addToCart = filter_input(INPUT_GET, 'addToCart', FILTER_SANITIZE_SPECIAL_CHARS);
+$removeFromCart = filter_input(INPUT_GET, 'removeFromCart', FILTER_SANITIZE_SPECIAL_CHARS);
+
+if ($addToCart || $removeFromCart) {
+    if ($addToCart) {
+        addToCart($product_id, $user_id);
+    } elseif ($removeFromCart) {
+        removeFromCart($product_id, $user_id);
+    }
+
+    header("location: /cart.php");
+    exit;
+}
+
 if ($cart = getCart($user_id)) {
     $products = $cart['products'];
 }
