@@ -283,6 +283,40 @@ function addToCart($product_id, $user_id) {
     return update_db($query);
 }
 
+function removeFromCart($product_id, $user_id) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $products = [];
+
+    $date_added = date('Y-m-d H:i:s');
+
+    if ($user_id) {
+        $query = "SELECT * FROM cart WHERE user_id = '" . (int)$user_id . "'";
+    } else {
+        $query = "SELECT * FROM cart WHERE session_id = '" . session_id() . "'";
+    }
+
+    $result = get_db_row($query);
+
+    if (!empty($result)) {
+        $cart_id = (int)$result['cart_id'];
+
+        $products = json_decode($result['products'], true);
+
+        if ($products) {
+            if (isset($products[$product_id])) {
+                unset($products[$product_id]);
+            }
+        }
+
+        $query = "UPDATE `cart` SET products = '" . json_encode($products) . "', session_id = '" . session_id() . "', date_added = '" . $date_added . "'  WHERE cart_id = '" . $cart_id . "'";
+    } else {
+        $query = "INSERT INTO `cart` (user_id, products, session_id, date_added) VALUES ('" . (int)$user_id . "', '" . $products . "', '" . session_id() . "', '" . $date_added . "')";
+    }
+
+    return update_db($query);
+}
+
 function getCart($user_id) {
     require_once(__DIR__ . '/../config/db.php');
 
