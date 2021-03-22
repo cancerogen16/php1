@@ -150,6 +150,33 @@ td.action {
     margin: 0 30px;
 }
 
+.header-cart {
+    position: relative;
+}
+
+.cart-content {
+    background: white;
+    display: none;
+    position: absolute;
+}
+
+.header-cart:hover .cart-content {
+    display: block;
+}
+
+.cart-content table {
+    border-collapse: collapse;
+}
+
+.cart-content table tr {
+    border: 1px solid #888;
+}
+
+.cart-content table td {
+    border: 1px solid #f1f1f1;
+    padding: 1px 3px;
+}
+
 .account {
     display: flex;
     align-items: center;
