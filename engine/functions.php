@@ -358,3 +358,15 @@ function getCart($user_id) {
 
     return $cart;
 }
+
+function deleteCart($user_id) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    if ($user_id) {
+        $query = "DELETE FROM cart WHERE user_id = '" . (int)$user_id . "'";
+    } else {
+        $query = "DELETE FROM cart WHERE session_id = '" . session_id() . "'";
+    }
+
+    return update_db($query);
+}
