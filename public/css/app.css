@@ -45,6 +45,7 @@ td.image {
 
 td.price {
     text-align: right;
+    white-space: nowrap;
 }
 
 td.quantity {
