@@ -30,6 +30,9 @@ if ($product_id) {
         }
 
         addToCart($product_id, $user_id);
+
+        header("location: /product.php?product_id=$product_id");
+        exit;
     }
 
     setViews($product_id);
