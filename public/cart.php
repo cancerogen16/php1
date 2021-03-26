@@ -67,7 +67,6 @@ if ($cart = getCart($user_id)) {
                             <th>Количество</th>
                             <th>Всего</th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,10 +88,7 @@ if ($cart = getCart($user_id)) {
                             <td class="price"><?= $product['price'] ?></td>
                             <td class="quantity"><?= $product['quantity'] ?></td>
                             <td class="price"><?= $product['total'] ?></td>
-                            <td class="action"><a class="btn"
-                                    href="cart.php?addToCart=1&product_id=<?= $product['product_id'] ?>"
-                                    title="Добавить">Добавить</a></td>
-                            <td class="action"><a class="btn"
+                            <td class="action"><a class="btn remove"
                                     href="cart.php?removeFromCart=1&product_id=<?= $product['product_id'] ?>"
                                     title="Удалить">Удалить</a></td>
                         </tr>
@@ -115,6 +111,12 @@ if ($cart = getCart($user_id)) {
                     </tfoot>
                 </table>
             </div>
+            <?php if (!empty($products)) : ?>
+            <div class="cart-btns">
+                <a class="btn" href="catalog.php" title="Продолжить покупки">Продолжить покупки</a>
+                <a class="btn" href="order.php" title="Оформление заказа">Оформление заказа</a>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 
