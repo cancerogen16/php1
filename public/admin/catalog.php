@@ -28,84 +28,13 @@ if ($delete_product && $product_id) {
     exit();
 }
 
-$products = getProducts();
-?>
-<!DOCTYPE html>
-<html lang="ru">
+$params['TITLE'] = $data['title'] = 'Редактирование каталога товаров';
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Редактирование каталога товаров</title>
-    <link rel="stylesheet" href="/css/app.css">
-</head>
+$data['products'] = getProducts();
 
-<body>
-    <?php require_once(TEMPLATES_DIR . '/admin/header.php'); ?>
-    <hr>
+$params['CONTENT'] = renderTemplate('admin/catalog.tpl', $data);
 
-    <div class="content">
-        <div class="container">
-            <h1>Редактирование каталога товаров</h1>
-        </div>
-        <hr>
-        <div class="container">
-            <div class="products">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Наименование</th>
-                            <th>Изображение</th>
-                            <th>Цена</th>
-                            <th>Количество</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($products)) : ?>
-                            <?php foreach ($products as $p => $product) : ?>
-                                <tr>
-                                    <td class="number"><?= ($p + 1) ?></td>
-                                    <td class="name"><?= $product['name'] ?></td>
-                                    <td class="image">
-                                        <?php if (!empty($product['image'])) : ?>
-                                            <img class="product-image" src="/img/<?= $product['image'] ?>" alt="<?= $product['name'] ?>" width="64">
-                                        <?php else : ?>
-                                            Нет изображения
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="price"><?= $product['price'] ?></td>
-                                    <td class="quantity"><?= $product['quantity'] ?></td>
-                                    <td class="action"><a class="btn" href="product.php?product_id=<?= $product['product_id'] ?>" title="Редактировать">Редактировать</a></td>
-                                    <td class="action"><a class="btn" href="catalog.php?delete_product=1&product_id=<?= $product['product_id'] ?>" title="Удалить">Удалить</a></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr>
-                                <td colspan="10">Нет товаров</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+$params['HEADER'] = renderBlock('admin/header.php', $data);
+$params['FOOTER'] = renderBlock('admin/footer.php', $data);
 
-                <div class="add-product">
-                    <a class="btn" href="product.php?add_product=1" title="Добавить товар">Добавить
-                        товар</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <hr>
-    <?php require_once(TEMPLATES_DIR . '/admin/footer.php'); ?>
-
-    <?php require_once(TEMPLATES_DIR . '/modal.php'); ?>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="/js/app.js"></script>
-</body>
-
-</html>
+display($params);

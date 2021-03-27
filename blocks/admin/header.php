@@ -1,5 +1,5 @@
 <header class="header">
     <div class="container">
-        <?php require_once(TEMPLATES_DIR . '/admin/menu.php'); ?>
+        <?= renderBlock('admin/menu.php', $data) ?>
     </div>
 </header>
