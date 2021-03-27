@@ -17,34 +17,34 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     exit;
 }
 
-$username = $password = "";
-$username_err = $password_err = "";
+$data['username'] = $data['password'] = "";
+$data['username_err'] = $data['password_err'] = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty(trim($_POST["username"]))) {
-        $username_err = "Введите ваш логин";
+        $data['username_err'] = "Введите ваш логин";
     } else {
-        $username = trim($_POST["username"]);
+        $data['username'] = trim($_POST["username"]);
     }
 
     if (empty(trim($_POST["password"]))) {
-        $password_err = "Введите ваш пароль";
+        $data['password_err'] = "Введите ваш пароль";
     } else {
-        $password = trim($_POST["password"]);
+        $data['password'] = trim($_POST["password"]);
     }
 
-    if (empty($username_err) && empty($password_err)) {
-        $user = getUser($username);
+    if (empty($data['username_err']) && empty($data['password_err'])) {
+        $user = getUser($data['username']);
 
         if (count($user) == 1) {
             $user = reset($user);
 
             $hashed_password = $user['password'];
 
-            if (password_verify($password, $hashed_password)) {
+            if (password_verify($data['password'], $hashed_password)) {
                 $_SESSION["loggedin"] = true;
-                $_SESSION["username"] = $username;
+                $_SESSION["username"] = $data['username'];
                 $_SESSION["user_id"] = $user['user_id'];
                 $_SESSION["user_role"] = $user['user_role'];
 
@@ -56,55 +56,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 exit();
             } else {
-                $password_err = "Пароль неверный";
+                $data['password_err'] = "Пароль неверный";
             }
         } else {
-            $username_err = "Не найден аккаунт с таким логином";
+            $data['username_err'] = "Не найден аккаунт с таким логином";
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="ru">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Авторизация</title>
-    <link rel="stylesheet" href="/css/app.css">
-</head>
+$params['TITLE'] = $data['title'] = 'Авторизация';
 
-<body>
-    <?php require_once(TEMPLATES_DIR . '/header.php'); ?>
-    <hr>
+$params['CONTENT'] = renderTemplate('login.tpl', $data);
 
-    <div class="content">
-        <div class="container">
-            <div class="form-login">
-                <h1>Введите логин и пароль</h1>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                        <label>Логин</label>
-                        <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                        <span class="field-error"><?php echo $username_err; ?></span>
-                    </div>
-                    <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                        <label>Пароль</label>
-                        <input type="password" name="password" class="form-control">
-                        <span class="field-error"><?php echo $password_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Войти">
-                    </div>
-                    <p>Нет учетной записи? <a href="register.php">Зарегистрироваться</a>.</p>
-                </form>
-            </div>
-        </div>
-    </div>
+$params['HEADER'] = renderBlock('header.php', $data);
+$params['FOOTER'] = renderBlock('footer.php', $data);
 
-    <hr>
-    <?php require_once(TEMPLATES_DIR . '/footer.php'); ?>
-</body>
-
-</html>
+display($params);
