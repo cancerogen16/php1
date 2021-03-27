@@ -8,9 +8,8 @@ ini_set('display_startup_errors', '1');
 
 session_start();
 
-require __DIR__ . '/../../config/config.php';
-
-require_once(ENGINE_DIR . '/functions.php');
+include_once __DIR__ . '/../../config/config.php';
+require_once ENGINE_DIR . "/autoload.php";
 
 if (!isAdmin()) {
     header("Location: /login.php");

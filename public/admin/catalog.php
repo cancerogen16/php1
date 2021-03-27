@@ -8,10 +8,8 @@ ini_set('display_startup_errors', '1');
 
 session_start();
 
-require __DIR__ . '/../../config/config.php';
-
-require_once(ENGINE_DIR . '/functions.php');
-require_once(ENGINE_DIR . '/db_model.php');
+include_once __DIR__ . '/../../config/config.php';
+require_once ENGINE_DIR . "/autoload.php";
 
 if (!isAdmin()) {
     header("Location: /login.php");
@@ -68,32 +66,27 @@ $products = getProducts();
                     </thead>
                     <tbody>
                         <?php if (!empty($products)) : ?>
-                        <?php foreach ($products as $p => $product) : ?>
-                        <tr>
-                            <td class="number"><?= ($p + 1) ?></td>
-                            <td class="name"><?= $product['name'] ?></td>
-                            <td class="image">
-                                <?php if (!empty($product['image'])) : ?>
-                                <img class="product-image" src="/img/<?= $product['image'] ?>"
-                                    alt="<?= $product['name'] ?>" width="64">
-                                <?php else : ?>
-                                Нет изображения
-                                <?php endif; ?>
-                            </td>
-                            <td class="price"><?= $product['price'] ?></td>
-                            <td class="quantity"><?= $product['quantity'] ?></td>
-                            <td class="action"><a class="btn"
-                                    href="product.php?product_id=<?= $product['product_id'] ?>"
-                                    title="Редактировать">Редактировать</a></td>
-                            <td class="action"><a class="btn"
-                                    href="catalog.php?delete_product=1&product_id=<?= $product['product_id'] ?>"
-                                    title="Удалить">Удалить</a></td>
-                        </tr>
-                        <?php endforeach; ?>
+                            <?php foreach ($products as $p => $product) : ?>
+                                <tr>
+                                    <td class="number"><?= ($p + 1) ?></td>
+                                    <td class="name"><?= $product['name'] ?></td>
+                                    <td class="image">
+                                        <?php if (!empty($product['image'])) : ?>
+                                            <img class="product-image" src="/img/<?= $product['image'] ?>" alt="<?= $product['name'] ?>" width="64">
+                                        <?php else : ?>
+                                            Нет изображения
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="price"><?= $product['price'] ?></td>
+                                    <td class="quantity"><?= $product['quantity'] ?></td>
+                                    <td class="action"><a class="btn" href="product.php?product_id=<?= $product['product_id'] ?>" title="Редактировать">Редактировать</a></td>
+                                    <td class="action"><a class="btn" href="catalog.php?delete_product=1&product_id=<?= $product['product_id'] ?>" title="Удалить">Удалить</a></td>
+                                </tr>
+                            <?php endforeach; ?>
                         <?php else : ?>
-                        <tr>
-                            <td colspan="10">Нет товаров</td>
-                        </tr>
+                            <tr>
+                                <td colspan="10">Нет товаров</td>
+                            </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
@@ -111,8 +104,7 @@ $products = getProducts();
 
     <?php require_once(TEMPLATES_DIR . '/modal.php'); ?>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/app.js"></script>
 </body>
 

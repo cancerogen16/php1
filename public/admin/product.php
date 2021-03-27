@@ -8,11 +8,8 @@ ini_set('display_startup_errors', '1');
 
 session_start();
 
-require __DIR__ . '/../../config/config.php';
-
-require_once(ENGINE_DIR . '/functions.php');
-require_once(ENGINE_DIR . '/db_model.php');
-require_once(ENGINE_DIR . '/uploadImage.php');
+include_once __DIR__ . '/../../config/config.php';
+require_once ENGINE_DIR . "/autoload.php";
 
 if (!isAdmin()) {
     header("Location: /login.php");
@@ -117,35 +114,32 @@ if (isset($errors['name'])) {
                     <input type="hidden" name="product_id" value="<?= $product_id ?>" />
                     <input type="hidden" name="image" value="<?= $image ?>" />
                     <div class="form-group"><label for="product_name">Название товара </label>
-                        <input type="text" name="name" value="<?= $name ?>" id="product_name"
-                            placeholder="Название товара" />
+                        <input type="text" name="name" value="<?= $name ?>" id="product_name" placeholder="Название товара" />
                         <span class="field-error"><?php echo $name_err; ?></span>
                     </div>
                     <div class="form-group"><label for="product_quantity">Количество товара </label>
-                        <input type="text" name="quantity" value="<?= $quantity ?>" id="product_quantity"
-                            placeholder="Количество товара" />
+                        <input type="text" name="quantity" value="<?= $quantity ?>" id="product_quantity" placeholder="Количество товара" />
                     </div>
                     <div class="form-group"><label for="product_price">Цена товара </label>
-                        <input type="text" name="price" value="<?= $price ?>" id="product_price"
-                            placeholder="Цена товара" />
+                        <input type="text" name="price" value="<?= $price ?>" id="product_price" placeholder="Цена товара" />
                     </div>
                     <button type="submit" name="save" class="btn">Сохранить</button>
                     <button type="submit" name="apply" class="btn">Применить</button>
                 </div>
                 <div class="image-wrap">
                     <?php if (!empty($image)) : ?>
-                    <img src="/img/<?= $image ?>" alt="<?= $name ?>" width="300">
+                        <img src="/img/<?= $image ?>" alt="<?= $name ?>" width="300">
                     <?php else : ?>
-                    <p>Нет изображения</p>
+                        <p>Нет изображения</p>
                     <?php endif; ?>
                     <div class="upload">
                         <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
                         <input type="file" name="file">
                         <button type="submit" name="load_image" class="btn">
                             <?php if (!empty($image)) : ?>
-                            Заменить изображение
+                                Заменить изображение
                             <?php else : ?>
-                            Загрузить изображение
+                                Загрузить изображение
                             <?php endif; ?>
                         </button>
                     </div>
@@ -161,8 +155,7 @@ if (isset($errors['name'])) {
 
     <?php require_once(TEMPLATES_DIR . '/modal.php'); ?>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/app.js"></script>
 </body>
 

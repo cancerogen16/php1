@@ -8,7 +8,8 @@ ini_set('display_startup_errors', '1');
 
 session_start();
 
-require __DIR__ . '/../config/config.php';
+include_once __DIR__ . '/../config/config.php';
+require_once ENGINE_DIR . "/autoload.php";
 
 $title = 'Главная страница';
 

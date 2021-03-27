@@ -8,10 +8,8 @@ ini_set('display_startup_errors', '1');
 
 session_start();
 
-require_once __DIR__ . '/../config/config.php';
-
-require_once(ENGINE_DIR . '/functions.php');
-require_once(ENGINE_DIR . '/db_model.php');
+include_once __DIR__ . '/../config/config.php';
+require_once ENGINE_DIR . "/autoload.php";
 
 $user_id = 0;
 
