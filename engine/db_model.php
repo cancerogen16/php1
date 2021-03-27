@@ -31,7 +31,7 @@ function update_db($request) {
     $db = connect_db();
     @mysqli_query($db, $request) or die(mysqli_error($db));
 
-    return mysqli_insert_id($db);
+    return mysqli_affected_rows($db);
 }
 
 function protect($val) {
