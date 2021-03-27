@@ -86,9 +86,7 @@ function editProduct($product_id, $data) {
 
     $query = "UPDATE product SET name = '" . protect($data['name']) . "', quantity = '" . (int)$data['quantity'] . "', price = '" . (float)$data['price'] . "', image = '" . protect($data['image']) . "'  WHERE product_id = '" . (int)$product_id . "'";
 
-    update_db($query);
-
-    return true;
+    return update_db($query);
 }
 
 /**
@@ -104,9 +102,7 @@ function deleteProduct($product_id) {
 
     $query = "DELETE FROM product WHERE product_id = '" . (int)$product_id . "'";
 
-    update_db($query);
-
-    return true;
+    return update_db($query);
 }
 
 /**
