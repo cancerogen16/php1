@@ -18,7 +18,7 @@ function isAdmin(): bool {
 function existUser($username): bool {
     require_once(__DIR__ . '/../config/db.php');
 
-    $query = "SELECT id FROM user WHERE username = '" . protect($username) . "'";
+    $query = "SELECT user_id FROM user WHERE username = '" . protect($username) . "'";
 
     $results = get_db_result($query);
 
