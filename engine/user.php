@@ -39,7 +39,7 @@ function addUser($username, $password) {
 
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "SELECT * FROM user WHERE 1"; // получение из базы всех пользователей
+    $query = "SELECT * FROM user"; // получение из базы всех пользователей
 
     $results = get_db_result($query);
 

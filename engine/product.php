@@ -12,7 +12,7 @@ function getProducts($sort = '', $order = '') {
 
     $products_data = [];
 
-    $query = "SELECT * FROM product WHERE 1";
+    $query = "SELECT * FROM product";
 
     if ($sort) {
         $query .= " ORDER BY $sort";
