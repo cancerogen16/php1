@@ -99,8 +99,8 @@ function getCart($user_id) {
 
             $cart['products'][$product_id] = $product;
             $cart['products'][$product_id]['quantity'] = $quantity;
-            $cart['products'][$product_id]['price'] = number_format((float)$product['price'], 0, ',', ' ');
-            $cart['products'][$product_id]['total'] = number_format($quantity * (float)$product['price'], 0, ',', ' ');
+            $cart['products'][$product_id]['price'] = (float)$product['price'];
+            $cart['products'][$product_id]['total'] = (float)$product['price'] * $quantity;
 
             $count++;
 
@@ -108,7 +108,7 @@ function getCart($user_id) {
         }
 
         $cart['count'] = $count;
-        $cart['total'] = number_format((float)$total, 0, ',', ' ');
+        $cart['total'] = $total;
     }
 
     return $cart;
