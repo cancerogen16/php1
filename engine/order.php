@@ -25,6 +25,14 @@ function getOrders() {
     return $orders_data;
 }
 
+function getStatuses() {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $query = "SELECT * FROM `order_status`";
+
+    return get_db_result($query);
+}
+
 function getOrderStatus($order_status_id) {
     require_once(__DIR__ . '/../config/db.php');
 
@@ -66,7 +74,7 @@ function getOrderProducts($order_id) {
 function editOrder($order_id, $data) {
     require_once(__DIR__ . '/../config/db.php');
 
-    $query = "UPDATE `order` SET username = '" . protect($data['username']) . "', phone = '" . protect($data['phone']) . "', address = '" . protect($data['address']) . "' WHERE order_id = '" . (int)$order_id . "'";
+    $query = "UPDATE `order` SET username = '" . protect($data['username']) . "', phone = '" . protect($data['phone']) . "', address = '" . protect($data['address']) . "', order_status_id = '" . (int)($data['order_status_id']) . "' WHERE order_id = '" . (int)$order_id . "'";
     update_db($query);
 
     $query = "DELETE FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
