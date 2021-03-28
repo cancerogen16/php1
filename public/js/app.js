@@ -30,14 +30,14 @@ $('.addToCart').click(function(e) {
                         headerCart += '<tr>';
                         headerCart += '<td><img src="img/' + product.image + '" alt="' + product.name + '" width="24"></td>';
                         headerCart += '<td><a class="cart__link" href="/product.php?product_id=' + product.product_id + '">' + product.name + '</a></td>';
-                        headerCart += '<td class="price">' + product.price + '</td>';
+                        headerCart += '<td class="price">' + formatPrice(product.price) + '</td>';
                         headerCart += '<td>' + product.quantity + '</td>';
-                        headerCart += '<td class="price">' + product.total + '</td>';
+                        headerCart += '<td class="price">' + formatPrice(product.total) + '</td>';
                         headerCart += '</tr>';
                     }
                 }
                 headerCart += '</tbody><tfoot>';
-                headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + json.total + '</td></tr>';
+                headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + formatPrice(json.total) + '</td></tr>';
                 headerCart += '</tfoot></table>';
 
                 headerCart += '<div class="order-button"><a class="btn" href="/order.php">Оформить заказ</a></div>';
@@ -87,6 +87,10 @@ function changeQuantity(product_id, quantity) {
             return false;
         }
     });
+}
+
+function formatPrice(price) {
+    return summStr = Math.round(price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
 }
 
 $('.quantity-btn').click(function(e) {
