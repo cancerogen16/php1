@@ -11,15 +11,11 @@ session_start();
 include_once __DIR__ . '/../config/config.php';
 require_once ENGINE_DIR . "/autoload.php";
 
-$data['title'] = 'Главная страница';
+$params['TITLE'] = $data['title'] = 'Ваш заказ сформирован.';
 
-if (!empty($_SESSION["username"])) {
-    $data['title'] = 'Привет, <b>' . htmlspecialchars($_SESSION["username"]) . '</b>. Добро пожаловать на сайт.';
-}
+$data['products'] = getProducts('views', 'desc');
 
-$params['TITLE'] = $data['title'];
-
-$params['CONTENT'] = renderTemplate('home.tpl', $data);
+$params['CONTENT'] = renderTemplate('success.tpl', $data);
 
 $params['HEADER'] = renderBlock('header.php', $data);
 $params['FOOTER'] = renderBlock('footer.php', $data);
