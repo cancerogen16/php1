@@ -37,3 +37,7 @@ function update_db($request) {
 function protect($val) {
     return strip_tags(htmlspecialchars(mysqli_real_escape_string(connect_db(), $val)));
 }
+
+function getLastId() {
+    return mysqli_insert_id(connect_db());
+}
