@@ -18,8 +18,13 @@ if ($product_id && $quantity) {
 
     addToCart($product_id, $quantity, $user_id);
 
+    $cart = getCart($user_id);
+
     $json = [
-        'success' => '1'
+        'success' => '1',
+        'products' => $cart['products'],
+        'count' => $cart['count'],
+        'total' => $cart['total'],
     ];
 } else {
     $json = [
