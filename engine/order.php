@@ -9,6 +9,9 @@ function getOrders() {
 
     if (!empty($orders = get_db_result($query))) {
         foreach ($orders as $order) {
+            $query = "SELECT name FROM `order_status` WHERE order_status_id = '" . (int)$order['order_status_id'] . "'";
+            $status = get_db_row($query)['name'];
+
             $orders_data[] = [
                 'order_id' => $order['order_id'],
                 'username' => $order['username'],
@@ -16,7 +19,7 @@ function getOrders() {
                 'address' => $order['address'],
                 'total' => formatPrice($order['total']),
                 'order_status_id' => $order['order_status_id'],
-                'order_status' => $order['order_status_id'],
+                'order_status' => $status,
                 'date_added' => $order['date_added'],
             ];
         }
