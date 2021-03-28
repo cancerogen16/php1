@@ -24,3 +24,14 @@ function getOrders() {
 
     return $orders_data;
 }
+
+function deleteOrder($order_id) {
+    require_once(__DIR__ . '/../config/db.php');
+
+    $query = "DELETE FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
+    update_db($query);
+
+    $query = "DELETE FROM `order` WHERE order_id = '" . (int)$order_id . "'";
+
+    return update_db($query);
+}

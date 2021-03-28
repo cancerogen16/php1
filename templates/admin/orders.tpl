@@ -40,7 +40,7 @@
                 </td>
                 <td class="action"><a class="btn" href="order.php?order_id=<?= $order['order_id'] ?>"
                         title="Редактировать">Редактировать</a></td>
-                <td class="action"><a class="btn" href="catalog.php?delete_order=1&order_id=<?= $order['order_id'] ?>"
+                <td class="action"><a class="btn" href="orders.php?delete_order=1&order_id=<?= $order['order_id'] ?>"
                         title="Удалить">Удалить</a></td>
             </tr>
             <?php endforeach; ?>
