@@ -13,29 +13,45 @@ require_once ENGINE_DIR . "/autoload.php";
 
 $user_id = 0;
 
+$data['username'] = $data['phone'] = $data['address'] = "";
+$data['username_err'] = $data['phone_err'] = $data['address_err'] = "";
+
 if (isset($_SESSION["user_id"]) && $_SESSION["user_id"]) {
     $user_id = (int)$_SESSION["user_id"];
-}
 
-$product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
-$addToCart = filter_input(INPUT_GET, 'addToCart', FILTER_SANITIZE_SPECIAL_CHARS);
-$removeFromCart = filter_input(INPUT_GET, 'removeFromCart', FILTER_SANITIZE_SPECIAL_CHARS);
-
-if ($addToCart || $removeFromCart) {
-    if ($addToCart) {
-        addToCart($product_id, $user_id);
-    } elseif ($removeFromCart) {
-        removeFromCart($product_id, $user_id);
-    }
-
-    header("location: /cart.php");
-    exit;
+    $data['username'] = $_SESSION["username"];
 }
 
 $data['products'] = [];
 
 if ($cart = getCart($user_id)) {
     $data['products'] = $cart['products'];
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty(trim($_POST["username"]))) {
+        $data['username_err'] = "Введите ваше имя";
+    } else {
+        $data['username'] = trim($_POST["username"]);
+    }
+
+    if (empty(trim($_POST["phone"]))) {
+        $data['phone_err'] = "Введите ваш телефон";
+    } else {
+        $data['phone'] = trim($_POST["phone"]);
+    }
+
+    if (empty(trim($_POST["address"]))) {
+        $data['address_err'] = "Введите ваш адрес";
+    } else {
+        $data['address'] = trim($_POST["address"]);
+    }
+
+    if (empty($data['username_err']) && empty($data['phone_err']) && empty($data['address_err'])) {
+        $data['order_status_id'] = '2'; // В обработке
+
+        addOrder($data);
+    }
 }
 
 $params['TITLE'] = $data['title'] = 'Оформление заказа';
