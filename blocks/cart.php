@@ -24,9 +24,9 @@ if ($cart = getCart($user_id)) {
                     <td><a class="cart__link"
                             href="/product.php?product_id=<?= $product['product_id'] ?>"><?= $product['name'] ?></a>
                     </td>
-                    <td class="price"><?= $product['price'] ?></td>
+                    <td class="price"><?= formatPrice($product['price']) ?></td>
                     <td><?= $product['quantity'] ?></td>
-                    <td class="price"><?= $product['total'] ?></td>
+                    <td class="price"><?= formatPrice($product['total']) ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -34,7 +34,7 @@ if ($cart = getCart($user_id)) {
                 <tr>
                     <td colspan="3">Итого</td>
                     <td><?= $cart['count'] ?></td>
-                    <td class="price"><?= $cart['total'] ?></td>
+                    <td class="price"><?= formatPrice($cart['total']) ?></td>
                 </tr>
             </tfoot>
         </table>

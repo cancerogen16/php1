@@ -1,4 +1,7 @@
 <?php
+function formatPrice($price = 0) {
+    return number_format((float)$price, 0, ',', ' ');
+}
 
 function addToCart($product_id, $user_id) {
     require_once(__DIR__ . '/../config/db.php');
