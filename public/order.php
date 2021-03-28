@@ -55,6 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $order_id = addOrder($data);
 
         if ($order_id) {
+            deleteCart($user_id);
+
             header("location: /success.php");
             exit;
         }
