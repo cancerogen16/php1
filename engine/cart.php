@@ -108,7 +108,7 @@ function getCart($user_id) {
         }
 
         $cart['count'] = $count;
-        $cart['total'] = $total;
+        $cart['total'] = number_format((float)$total, 0, ',', ' ');
     }
 
     return $cart;
@@ -126,12 +126,10 @@ function deleteCart($user_id) {
     return update_db($query);
 }
 
-function editCart($product_id, $user_id) {
+function changeQuantity($product_id, $user_id, $quantity) {
     require_once(__DIR__ . '/../config/db.php');
 
     $products = [];
-
-    $date_added = date('Y-m-d H:i:s');
 
     if ($user_id) {
         $query = "SELECT * FROM cart WHERE user_id = '" . (int)$user_id . "'";
@@ -148,14 +146,14 @@ function editCart($product_id, $user_id) {
 
         if ($products) {
             if (isset($products[$product_id])) {
-                unset($products[$product_id]);
+                $products[$product_id] = $quantity;
             }
         }
 
-        $query = "UPDATE `cart` SET products = '" . json_encode($products) . "', session_id = '" . session_id() . "', date_added = '" . $date_added . "'  WHERE cart_id = '" . $cart_id . "'";
-    } else {
-        $query = "INSERT INTO `cart` (user_id, products, session_id, date_added) VALUES ('" . (int)$user_id . "', '" . $products . "', '" . session_id() . "', '" . $date_added . "')";
-    }
+        $query = "UPDATE `cart` SET products = '" . json_encode($products) . "' WHERE cart_id = '" . $cart_id . "'";
 
-    return update_db($query);
+        return update_db($query);
+    } else {
+        return false;
+    }
 }
