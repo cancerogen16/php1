@@ -27,6 +27,7 @@ $order_id = filter_input(INPUT_GET, 'order_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
 $data['title'] = 'Редактирование заказа №' . $order_id;
 
+$data['order_status_id'] = 0;
 $data['total'] = 0;
 
 $order_info = [];
@@ -34,8 +35,11 @@ $order_info = [];
 if ($order_id) {
     $order_info = getOrder($order_id);
 
+    $data['order_status_id'] = $order_info['order_status_id'];
     $data['total'] = $order_info['total'];
 }
+
+$data['statuses'] = getStatuses();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ((isset($_POST['save']) || isset($_POST['apply'])) && !$errors = validateOrder($_POST)) {

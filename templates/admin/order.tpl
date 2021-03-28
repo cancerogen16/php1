@@ -95,6 +95,20 @@
         </table>
     </div>
     <div class="data-wrap">
+        <div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>" style="width:50%">
+            <label>Статус заказа</label>
+            <select class="form-control" name="order_status_id">
+                <?php foreach ($statuses as $status) : ?>
+                <option value="<?=$status['order_status_id']?>"
+                    <?=($status['order_status_id']==$order_status_id)?'selected':''?>>
+                    <?=$status['name']?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+    </div>
+    <div class="data-wrap">
         <button type="submit" name="save" class="btn">Сохранить</button>
         <button type="submit" name="apply" class="btn">Применить</button>
     </div>
