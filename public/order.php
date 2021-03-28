@@ -52,7 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $data['count'] = $cart['count'];
         $data['total'] = $cart['total'];
 
-        addOrder($data);
+        $order_id = addOrder($data);
+
+        if ($order_id) {
+            header("location: /success.php");
+            exit;
+        }
     }
 }
 
