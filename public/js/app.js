@@ -12,22 +12,40 @@ $('.addToCart').click(function(e) {
         if (json['success']) {
             const $modal = $('#modal');
 
-            $modal.find('.modal-content').html('<div class="popup-wrap"><div class="popup-title">' +
+            $modal.find('.modal-content').html('<div class="popup-wrap">' +
                 '<h4>Товар успешно добавлен в корзину</h4>' +
-                '</div>' +
-                '<div class="content">' +
-                '<div class="text">' +
-                '<div class="name">' +
-                '</div>' +
-                '<div class="price">' +
-                '</div>' +
-                '</div>' +
                 '<a class="btn" href="/order.php" ><b>Перейти к заказу</b></a>' +
-                '</div></div>');
+                '</div>');
 
             $modal.fadeIn();
 
-            $('.header-cart').html(json['total']);
+            let headerCart = '<a class="cart__link" href="/cart.php">Корзина (' + json['count'] + ')</a>';
+
+            if (json['products']) {
+                headerCart += '<div class="cart-content">';
+                headerCart += '<table><tbody>';
+                for (const key in json['products']) {
+                    if (Object.hasOwnProperty.call(json['products'], key)) {
+                        const product = json['products'][key];
+                        headerCart += '<tr>';
+                        headerCart += '<td><img src="img/' + product.image + '" alt="' + product.name + '" width="24"></td>';
+                        headerCart += '<td><a class="cart__link" href="/product.php?product_id=' + product.product_id + '">' + product.name + '</a></td>';
+                        headerCart += '<td class="price">' + product.price + '</td>';
+                        headerCart += '<td>' + product.quantity + '</td>';
+                        headerCart += '<td class="price">' + product.total + '</td>';
+                        headerCart += '</tr>';
+                    }
+                }
+                headerCart += '</tbody><tfoot>';
+                headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + json.total + '</td></tr>';
+                headerCart += '</tfoot></table>';
+
+                headerCart += '<div class="order-button"><a class="btn" href="/order.php">Оформить заказ</a></div>';
+
+                headerCart += '</div>';
+            }
+
+            $('.header-cart').html(headerCart);
 
             $('html, body').animate({ scrollTop: 0 }, 'slow');
         }
