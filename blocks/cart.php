@@ -38,6 +38,9 @@ if ($cart = getCart($user_id)) {
                 </tr>
             </tfoot>
         </table>
+        <div class="order-button">
+            <a class="btn" href="/order.php">Оформить заказ</a>
+        </div>
     </div>
     <?php endif; ?>
 </div>

@@ -159,11 +159,19 @@ td.action {
     position: relative;
 }
 
+.cart__link {
+    padding: 10px;
+}
+
 .cart-content {
     background: white;
     display: none;
     font-size: 80%;
+    margin-top: 5px;
+    padding: 10px 10px 0 10px;
     position: absolute;
+    -webkit-box-shadow: 1px 1px 3px 1px #999999;
+    box-shadow: 1px 1px 3px 1px #999999;
 }
 
 .header-cart:hover .cart-content {
@@ -181,6 +189,10 @@ td.action {
 .cart-content table td {
     border: 1px solid #f1f1f1;
     padding: 5px 10px;
+}
+
+.order-button {
+    margin: 15px 0;
 }
 
 .account {
