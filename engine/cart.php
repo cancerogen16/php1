@@ -3,7 +3,7 @@ function formatPrice($price = 0) {
     return number_format((float)$price, 0, ',', ' ');
 }
 
-function addToCart($product_id, $user_id) {
+function addToCart($product_id, $quantity, $user_id) {
     require_once(__DIR__ . '/../config/db.php');
 
     $products = [];
@@ -25,16 +25,18 @@ function addToCart($product_id, $user_id) {
 
         if ($products) {
             if (isset($products[$product_id])) {
-                $products[$product_id]++;
+                $products[$product_id] += $quantity;
             } else {
-                $products[$product_id] = 1;
+                $products[$product_id] = $quantity;
             }
         } else {
-            $products[$product_id] = 1;
+            $products[$product_id] = $quantity;
         }
 
         $query = "UPDATE `cart` SET products = '" . json_encode($products) . "', session_id = '" . session_id() . "', date_added = '" . $date_added . "'  WHERE cart_id = '" . $cart_id . "'";
     } else {
+        $products = [$product_id => $quantity];
+
         $query = "INSERT INTO `cart` (user_id, products, session_id, date_added) VALUES ('" . (int)$user_id . "', '" . json_encode($products) . "', '" . session_id() . "', '" . $date_added . "')";
     }
 
