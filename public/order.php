@@ -49,6 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($data['username_err']) && empty($data['phone_err']) && empty($data['address_err'])) {
         $data['order_status_id'] = '2'; // В обработке
+        $data['count'] = $cart['count'];
+        $data['total'] = $cart['total'];
 
         addOrder($data);
     }

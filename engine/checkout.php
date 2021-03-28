@@ -5,7 +5,7 @@ function addOrder($data) {
 
     $date_added = date('Y-m-d H:i:s');
 
-    $query = "INSERT INTO `order` (username, phone, address, order_status_id, date_added) VALUES ('" . protect($data['username']) . "', '" . protect($data['phone']) . "', '" . protect($data['address']) . "', '" . (int)$data['order_status_id'] . "', '" . $date_added . "')";
+    $query = "INSERT INTO `order` (username, phone, address, total, order_status_id, date_added) VALUES ('" . protect($data['username']) . "', '" . protect($data['phone']) . "', '" . protect($data['address']) . "', '" . floatval($data['total']) . "',  '" . (int)$data['order_status_id'] . "', '" . $date_added . "')";
 
     update_db($query);
 
