@@ -72,14 +72,14 @@ function editOrder($order_id, $data) {
     $query = "DELETE FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
     update_db($query);
 
-    if (!empty($data['product'])) {
+    if (!empty($data['order_product'])) {
         $total = 0;
 
-        foreach ($data['product'] as $product_id => $product) {
+        foreach ($data['order_product'] as $product) {
             $product_total = floatval($product['price']) * intval($product['quantity']);
             $total += $product_total;
 
-            $query = "INSERT INTO `order_item` (order_id, product_id, name, quantity, price, total) VALUES ('" . (int)$order_id . "', '" . (int)$product_id . "', '" . protect($product['name']) . "', '" . intval($product['quantity']) . "', '" . floatval($product['price']) . "', '" . $product_total . "')";
+            $query = "INSERT INTO `order_item` (order_id, product_id, name, quantity, price, total) VALUES ('" . (int)$order_id . "', '" . (int)$product['product_id'] . "', '" . protect($product['name']) . "', '" . intval($product['quantity']) . "', '" . floatval($product['price']) . "', '" . $product_total . "')";
 
             update_db($query);
         }
