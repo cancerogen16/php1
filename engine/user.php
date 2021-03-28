@@ -10,6 +10,15 @@ function isAdmin(): bool {
 }
 
 /**
+ * Определение авторизации
+ *
+ * @return bool
+ */
+function isLogged(): bool {
+    return isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ? true : false;
+}
+
+/**
  * Найден пользователь в базе по имени
  *
  * @param  string $username
