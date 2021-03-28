@@ -21,7 +21,7 @@
             <?php foreach ($orders as $i => $order) : ?>
             <tr>
                 <td class="number">
-                    <?= ($i + 1) ?>
+                    <?= $order['order_id'] ?>
                 </td>
                 <td class="name">
                     <?= $order['username'] ?>
